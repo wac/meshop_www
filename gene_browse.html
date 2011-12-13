@@ -1,0 +1,92 @@
+<html>
+<head>
+  <title>Browse Gene MeSHOP Literature Results</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+  <script language="javascript" src="clipboard.js"> </script>
+<script language="javascript" type="text/javascript">
+<!-- 
+//Browser Support Code
+
+function articleClick(gene, term) {
+
+queryString = "genetermArticles.php?gene=" + gene + "&term=" + term;
+
+//ajaxSubmit( queryString, 'resultDiv2', "Fetching results from database<br>Loading from "+queryString);
+
+window.open( queryString );
+
+}
+
+function formSubmit(){
+var gene = document.getElementById('gene').value;
+var term = document.getElementById('term').value;
+
+var db_elem = document.getElementById("dbSelect"); 
+var db = db_elem.value;
+
+var limit = document.getElementById('limit').value;
+
+var queryString = "?term=" + term + "&gene=" + gene + "&db=" + db + "&limit=" + limit;
+
+var sortid_elem = document.getElementById("sortid"); 
+var sortid = sortid_elem.value;
+
+var order=document.getElementById('order').value;
+queryString = "browse_results.php" + queryString + "&sortid=" + sortid + "&order=" + order + "&showArticles=Y";
+
+ajaxSubmit( queryString, 'resultDiv', "Fetching results from database<br>Loading from "+queryString);
+
+}
+
+//-->
+</script>
+
+
+</head>
+<body>
+
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+<h1 class="boxed-title">Browse Gene MeSHOP Literature Results</h1>
+<p class="top">
+<div style="clear:both"></div>
+<form class="float-left" name='browseForm' onsubmit='return false' >
+Look for a specific Gene: <input type='text' id='gene' onkeyup="suggestGene()" onclick="suggestGene()" /> <br />
+Look for specific MeSH Term: <input type='text' id='term' onkeyup="suggestTerm('term','suggestDiv','')" style="width:25em"  onclick="suggestTerm('term','suggestDiv','')"/> <br />
+<select id='dbSelect' >
+<option value='nr_gene2pubmedBG_hum_gene2pubmed_gene_mesh_p' selected="selected">Non-Redundant Gene Profiles (Gene2Pubmed/Human Genes Background)</option>
+<option value='gene2pubmedBG_hum_gene2pubmed_gene_mesh_p' >Raw Gene Profiles (Gene2Pubmed/Human Genes Background)</option>
+<option value='nr_hum_gene2pubmed_gene_mesh_p'>Non-Redundant Gene Profiles (Gene2Pubmed/All Pubmed Background)</option>
+<option value='hum_gene2pubmed_gene_mesh_p'>Raw Gene Profiles (Gene2Pubmed/All Pubmed Background)</option>
+<option value='nr_gene2pubmedBG_jaspar_gene2pubmed_gene_mesh_p'>Non-Redundant TF Gene Profiles (Gene2Pubmed/TF Genes Background)</option>
+</select><br>
+<select id='sortid' >
+<option value='term_refs'>Articles</option>
+<option value='p_val' selected="selected">Score</option>
+<option value='term'>MeSH Term</option>
+<option value='gene.gene_id'>Gene ID</option>
+<option value='gene.locus'>Locus</option>
+</select><br>
+<select id=limit >
+<option value='50000'>Show Top 50000 Results</option>
+<option value='500' selected="selected">Show Top 500 Results</option>
+<option value='100'>Show Top 100 Results</option>
+<option value='50'>Show Top 50 Results</option>
+<option value='10'>Show Top 10 Results</option>
+</select>
+<select id=order >
+<option value='ASC'>Up</option>
+<option value='DESC'>Down</option>
+</select>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+<ul>
+<li>Type in a gene to see its associated biomedical terms
+<li>Type in a MeSH term to see all the associated genes
+</ul>
+</div>
+<div class="result-box" id='resultDiv'>Your result will display here</div>
+</body>
+</html>

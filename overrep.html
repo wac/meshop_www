@@ -1,0 +1,59 @@
+<html>
+<head>
+  <title>Find Overrepresented Gene Profile Terms</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+  <script language="javascript" src="clipboard.js"> </script>
+<script language="javascript" type="text/javascript">
+<!-- 
+//Browser Support Code
+
+function formSubmit(){
+
+
+var genelist_elem = document.getElementById("genelistbox");
+var genelist_txt = encodeURI(genelist_elem.value);
+
+var db_elem = document.getElementById("dbSelect"); 
+var db = db_elem.value;
+
+var queryString = "?genelist=" + genelist_txt + "&db=" + db;
+
+queryString = "overrep.php" + queryString;
+
+
+ajaxSubmit( queryString, 'resultDiv', "Fetching results from database<br>Loading from "+queryString);
+
+}
+
+//-->
+</script>
+
+
+</head>
+<body>
+
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+<h1 class="boxed-title">Find Overrepresented Gene Profile Terms</h1>
+<p class="top">
+<div style="clear:both"></div>
+
+
+<form class="float-left" name='browseForm' onsubmit='return false' >
+Enter a list of genes:<br>
+<textarea name='genelistbox' id='genelistbox' width='80' rows='10'></textarea><br>
+<select id='dbSelect' >
+<option value='nr_gene2pubmedBG_hum_gene2pubmed_gene_mesh_p'>Non-Redundant Gene Profiles (Gene2Pubmed/Human Genes Background)</option>
+<option value='gene2pubmedBG_hum_gene2pubmed_gene_mesh_p'>Raw Gene Profiles (Gene2Pubmed/Human Genes Background)</option>
+<option value='nr_hum_gene2pubmed_gene_mesh_p'>Non-Redundant Gene Profiles (Gene2Pubmed/All Pubmed Background)</option>
+<option value='hum_gene2pubmed_gene_mesh_p' selected='selected'>Raw Gene Profiles (Gene2Pubmed/All Pubmed Background)</option></select><br>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+</div>
+<div class="result-box" id='resultDiv'>Your result will display here</div>
+<hr>
+Uses <a href="http://www.phpmath.com/build02/PDL/docs/index.php">PHP PDL build02</a> statistics package
+</body>
+</html>

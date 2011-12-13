@@ -1,0 +1,55 @@
+<html>
+<head>
+  <title>Find Overrepresented PubMed Article Terms</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+  <script language="javascript" src="clipboard.js"> </script>
+<script language="javascript" type="text/javascript">
+<!-- 
+//Browser Support Code
+
+function formSubmit(){
+
+
+var pmlist_elem = document.getElementById("pubmedlistbox");
+var pmlist_txt = encodeURI(pmlist_elem.value);
+
+//var db_elem = document.getElementById("dbSelect"); 
+//var db = db_elem.value;
+var db="pubmed_mesh_parent";
+
+var queryString = "?pubmedlist=" + pmlist_txt + "&db=" + db;
+
+queryString = "overrep_pubmed.php" + queryString;
+
+
+ajaxSubmit( queryString, 'resultDiv', "Fetching results from database<br>Loading from "+queryString);
+
+}
+
+//-->
+</script>
+
+
+</head>
+<body>
+
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+<h1 class="boxed-title">Find Overrepresented PubMed Article Terms</h1>
+<p class="top">
+<div style="clear:both"></div>
+
+
+<form class="float-left" name='browseForm' onsubmit='return false' >
+Enter a list of PMIDs:<br>
+<textarea name='pubmedlistbox' id='pubmedlistbox' width='80' rows='10'></textarea><br>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+</div>
+<div class="result-box" id='resultDiv'>Your result will display here</div>
+<hr>
+Uses <a href="http://www.phpmath.com/build02/PDL/docs/index.php">PHP PDL build02</a> statistics package
+</body>
+</html>

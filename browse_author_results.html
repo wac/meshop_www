@@ -1,0 +1,111 @@
+<html>
+<head>
+  <title>Browse Related Author Predictions</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+<script language="javascript" type="text/javascript">
+<!-- 
+//Browser Support Code
+
+function updateDB() {
+var db = document.getElementById('db').value;
+
+if (db == "CTD_validation") {
+  var sortid_elem = document.getElementById("sortid"); 
+ if (sortid_elem.style.display != "none") {
+  sortid_elem.style.display = "none";
+ }
+ sortid_elem = document.getElementById("sortid0");
+ if (sortid_elem.style.display != "inline") { 
+  sortid_elem.style.display = "inline";
+ }
+} else {
+ var sortid_elem = document.getElementById("sortid"); 
+ if (sortid_elem.style.display != "inline") {
+  sortid_elem.style.display = "inline";
+ }
+ sortid_elem = document.getElementById("sortid0");
+ if (sortid_elem.style.display != "none") { 
+  sortid_elem.style.display = "none";
+ }
+}
+}
+
+function formSubmit(){
+
+var auth_name = document.getElementById('auth_name').value;
+var auth_name2 = document.getElementById('auth_name2').value;
+var db = document.getElementById('db').value;
+var limit = document.getElementById('limit').value;
+
+var sortid=document.getElementById('sortid').value;
+
+var order=document.getElementById('order').value;
+
+var queryString = "?name=" + auth_name + "&limit=" + limit + "&db=" + db + "&sortid=" + sortid + "&auth_name2=" + auth_name2;
+
+
+queryString = "fetch_author.py" + queryString;
+
+ajaxSubmit( queryString, 'resultDiv',
+"Fetching results from database<br>Loading from "+queryString);
+
+}
+
+//-->
+</script>
+</head>
+
+<body>
+
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+
+<h1 class="boxed-title">Browse Related Author Predictions</h1>
+<p class="top">
+<div style="clear:both"></div>
+
+<form class="float-left" name='browseForm' onsubmit='return false' >
+Author: <input type='text' id='auth_name' onkeyup="" onclick="" style="width:25em" /> <br />
+(Second Author): <input type='text' id='auth_name2' onkeyup="suggestGene()" onclick="suggestGene()" /> <br />
+BitHash Database (Authors with 20 &lt articles &lt 1000): <select id='db' onchange="updateDB()">
+<option value='hash-avg-tier2-1000.txt'>BitHash Top 1000 Tier 2 MeSH Terms with lowest Overall Mean p</option>
+<option value='hash-avg-tier3-1000.txt'>BitHash Top 1000 Tier 3 MeSH Terms with lowest Overall Mean p</option>
+<option value='hash-avg-tier4-1000.txt' selected='selected'>BitHash Top 1000 Tier 4 MeSH Terms with lowest Overall Mean p</option>
+<option value='hash-avg-1000.txt'>BitHash Top 1000 MeSH Terms with lowest Overall Mean p</option>
+<option value='hash0.5-1000.txt'>BitHash Top 1000 MeSH Terms, Mean p &lt 0.5</option>
+<option value='hash0.5-tier2-1000.txt'>BitHash Top 1000 Tier 2 MeSH Terms, Mean p &lt 0.5</option>
+<option value='hash0.5-tier3-1000.txt'>BitHash Top 1000 Tier 3 MeSH Terms, Mean p &lt 0.5</option>
+<option value='hash0.5-tier4-1000.txt'>BitHash Top 1000 Tier 4 MeSH Terms, Mean p &lt 0.5</option>
+</select><br />
+<select id='sortid0' style="display:none">
+<option value='gene.gene_id'>Gene ID</option>
+<option value='gene.locus'>Locus</option>
+<option value='term'>MeSH Term</option>
+</select>
+<select id='sortid'>
+<option value='allbits'>Total Bits Matched</option>
+<option value='onebits'>Low p-value Bits Matched</option>
+<option value='score'>Combined Bit Score Matched</option>
+<option value='jaccard' selected='selected'>Jaccard Index</option>
+</select><br />
+<select id=limit>
+<option value='50000'>Show Top 50000 Results</option>
+<option value='10000'>Show Top 10000 Results</option>
+<option value='1000' selected='selected'>Show Top 1000 Results</option>
+<option value='100'>Show Top 100 Results</option>
+<option value='50'>Show Top 50 Results</option>
+<option value='10'>Show Top 10 Results</option>
+</select>
+<select id=order>
+<option value='ASC' selected="selected">Ascending</option>
+<option value='DESC'>Descending</option>
+</select>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+</div>
+
+<div class="result-box" id='resultDiv'></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+<head>
+  <title>Fetch PubMed articles for Genes on a Topic</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+  <script language="javascript" src="clipboard.js"> </script>
+</head>
+<body>
+
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+<h1 class="boxed-title">Fetch PubMed articles for Genes on a Topic</h1>
+<p class="top">
+<div style="clear:both"></div>
+
+
+<form class="float-left" name='browseForm' action="meshmap.php" method="post" >
+Enter List of terms to map to MeSH:<br>
+<textarea name='mtermlist' width='80' rows='10'></textarea>
+<br>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+</div>
+<div class="result-box" id='resultDiv'>This tool returns a tab-delimited text file with columns (term, potentially mapped MeSH term)</div>
+</body>
+</html>

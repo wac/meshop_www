@@ -1,0 +1,129 @@
+<html>
+<head>
+  <title>Browse Drug-Disease Predictions</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+<script language="javascript" type="text/javascript">
+<!-- 
+//Browser Support Code
+
+function updateDB() {
+var db = document.getElementById('db').value;
+
+if (db == "CTD_validation") {
+  var sortid_elem = document.getElementById("sortid"); 
+ if (sortid_elem.style.display != "none") {
+  sortid_elem.style.display = "none";
+ }
+ sortid_elem = document.getElementById("sortid0");
+ if (sortid_elem.style.display != "inline") { 
+  sortid_elem.style.display = "inline";
+ }
+} else {
+ var sortid_elem = document.getElementById("sortid"); 
+ if (sortid_elem.style.display != "inline") {
+  sortid_elem.style.display = "inline";
+ }
+ sortid_elem = document.getElementById("sortid0");
+ if (sortid_elem.style.display != "none") { 
+  sortid_elem.style.display = "none";
+ }
+}
+}
+
+function formSubmit(){
+
+var chem = document.getElementById('chem').value;
+var term = document.getElementById('term').value;
+var db = document.getElementById('db').value;
+var limit = document.getElementById('limit').value;
+
+var queryString = "?term=" + term + "&chem=" + chem + "&db=" + db + "&limit=" + limit;
+
+var sortid;
+
+if (db == "CTD_validation") {
+  var sortid_elem = document.getElementById("sortid"); 
+ if (sortid_elem.style.display != "none") {
+  sortid_elem.style.display = "none";
+ }
+ sortid_elem = document.getElementById("sortid0");
+ if (sortid_elem.style.display != "inline") { 
+  sortid_elem.style.display = "inline";
+ }
+ sortid = sortid_elem.value;
+} else {
+ var sortid_elem = document.getElementById("sortid"); 
+
+ if (sortid_elem.style.display != "inline") {
+  sortid_elem.style.display = "inline";
+ }
+
+ var sortid = sortid_elem.value;
+}
+
+var order=document.getElementById('order').value;
+queryString = "browse_dpc_results.php" + queryString + "&sortid=" + sortid + "&order=" + order;
+
+ajaxSubmit( queryString, 'resultDiv',
+"Fetching results from database<br>Loading from "+queryString);
+
+}
+
+//-->
+</script>
+</head>
+
+<body>
+
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+
+<h1 class="boxed-title">Browse Drug-Disease Predictions</h1>
+<p class="top">
+<div style="clear:both"></div>
+
+<form class="float-left" name='browseForm' onsubmit='return false' >
+Drug (Chemical): <input type='text' id='chem' onkeyup="suggestName('chem','suggestDiv','disease_pharma_chem_profiles', 'chem', 'drug', 'Acetaminophen')" onclick="suggestName('chem','suggestDiv','disease_pharma_chem_profiles', 'chem', 'drug', 'Acetaminophen')" /> <br />
+Disease MeSH Term: <input type='text' id='term' onkeyup="suggestTerm('term','suggestDiv','C')" onclick="suggestTerm('term','suggestDiv','C')" style="width:25em" /> <br />
+Database: <select id='db' onchange="updateDB()">
+<option value='disease_pharma_chem_profiles'>All Predicted Connections via Gene2Pubmed</option>
+</select><br />
+<select id='sortid0' style="display:none">
+<option value='chem'>Drug Name</option>
+<option value='term'>Disease Term</option>
+</select>
+<select id='sortid'>
+<option value='score12'>Sum of the log of combined p-values, normalised by number of articles</option>
+<option value='score11'>Sum of the differences of log p values</option>
+<option value='score10'>L2 of log-p of intersecting terms, normalised by number of articles</option>
+<option value='score9'>L2 of term fractions of intersecting terms only</option>
+<option value='score8' selected="selected">L2 of log of p-values</option>
+<option value='score7'>L2 of p-values</option>
+<option value='score6'>L2 of term fractions</option>
+<option value='score5'>L2 of term frequency</option>
+<option value='score4'>Total number of terms</option>
+<option value='score3'>Number of  Intersecting Terms</option>
+<option value='gene.gene_id'>Gene ID</option>
+<option value='gene.locus'>Locus</option>
+<option value='term'>MeSH Term</option>
+</select><br />
+<select id=limit>
+<option value='50000'>Show Top 50000 Results</option>
+<option value='10000'>Show Top 10000 Results</option>
+<option value='100' selected="selected">Show Top 100 Results</option>
+<option value='50'>Show Top 50 Results</option>
+<option value='10'>Show Top 10 Results</option>
+</select>
+<select id=order>
+<option value='ASC' selected="selected">Ascending</option>
+<option value='DESC'>Descending</option>
+</select>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+</div>
+
+<div class="result-box" id='resultDiv'></div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+<head>
+  <title>Fetch Direct Association Scores for Genes on a Topic</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+  <script language="javascript" src="clipboard.js"> </script>
+</head>
+<body>
+
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+<h1 class="boxed-title">Fetch Direct Association Scores for Genes on a Topic</h1>
+<p class="top">
+<div style="clear:both"></div>
+
+
+<form class="float-left" name='browseForm' action="dlink_fetch.php" method="post" >
+Look for specific MeSH Term: <input type='text' name='term' id='term' onkeyup="suggestTerm('term','suggestDiv','')" style="width:25em"  onclick="suggestTerm('term','suggestDiv','')"/> <br />
+Search for this term or more specific term<br />
+<br />
+Gene References Source: <select id='dbSelect' name='db'>
+<option value='gene2pubmedBG_hum_gene2pubmed_gene_mesh_p'>Gene2PubMed Background Human Gene2PubMed Profiles</option>
+<option value='hum_gene2pubmed_gene_mesh_p'>Raw Human Gene2PubMed Profiles</option>
+</select><br>
+Enter List of Entrez Gene IDs to Search:<br>
+<textarea name='genelist' width='80' rows='10'></textarea>
+<br>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+</div>
+<div class="result-box" id='resultDiv'>This tool returns a tab-delimited text file with columns (locus, Entrez Gene ID, MeSH Term, p-value) </div>
+</body>
+</html>

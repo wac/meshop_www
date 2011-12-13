@@ -1,0 +1,125 @@
+<html>
+<head>
+  <title>Browse Drug/Chemical MeSHOP Literature Results</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+  <script language="javascript" src="clipboard.js"> </script>
+</head>
+
+
+<body>
+
+<script language="javascript" type="text/javascript">
+<!-- 
+//Browser Support Code
+
+function articleClick(term1, term2) {
+
+queryString = "termtermArticles.php?term1=" + term1 + "&term2=" + term2;
+
+//ajaxSubmit( queryString, 'resultDiv2', "Fetching results from database<br>Loading from "+queryString);
+
+window.open( queryString );
+
+}
+
+
+function formSubmit(){
+
+var ajaxRequest;  // The variable that makes Ajax possible!
+
+try{
+ // Opera 8.0+, Firefox, Safari
+ ajaxRequest = new XMLHttpRequest();
+} catch (e){
+ // Internet Explorer Browsers
+ try{
+  ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+ } catch (e) {
+  try{
+   ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+  } catch (e){
+   // Something went wrong
+   alert("Your browser broke!");
+   return false;
+  }
+ }
+}
+
+// Create a function that will receive data sent from the server
+ajaxRequest.onreadystatechange = function(){
+ if(ajaxRequest.readyState == 4){
+  var ajaxDisplay = document.getElementById('ajaxDiv');
+  ajaxDisplay.innerHTML = ajaxRequest.responseText;
+ }
+}
+var chem = document.getElementById('chem').value;
+var term = document.getElementById('term').value;
+
+var db_elem = document.getElementById("dbSelect"); 
+var db = db_elem.value;
+
+var limit = document.getElementById('limit').value;
+
+var queryString = "?term=" + term + "&chem=" + chem + "&db=" + db + "&limit=" + limit;
+
+var sortid_elem = document.getElementById("sortid"); 
+var sortid = sortid_elem.value;
+
+var order=document.getElementById('order').value;
+
+queryString = "chem_browse.php"+queryString + "&sortid=" + sortid + "&order=" + order;
+
+var ajaxDisplay = document.getElementById('ajaxDiv');
+ajaxDisplay.innerHTML = "Loading from "+queryString;
+
+ajaxRequest.open("GET", queryString, true);
+ajaxRequest.send(null); 
+
+}
+
+//-->
+</script>
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+
+<h1 class="boxed-title">Browse Drug/Chemical MeSHOP Literature Results</h1>
+<p class="top">
+<div style="clear:both"></div>
+
+
+<form class="float-left" name='browseForm' onsubmit='return false' >
+Browse Drug/Chemical: <input type='text' id='chem' style="width:25em" onkeyup="suggestTerm('chem','suggestDiv','D')" onclick="suggestTerm('chem','suggestDiv','D')" /> <br />
+Filter for specific MeSH term: <input type='text' id='term' style="width:25em" onkeyup="suggestTerm('term','suggestDiv','')" onclick="suggestTerm('term','suggestDiv','')"/> <br />
+<select id='dbSelect' >
+<option value='all_chem_mesh_p'>Raw Chem MeSHOPs (Gene2Pubmed/All Pubmed Background)</option>
+</select><br>
+<select id='sortid' >
+<option value='p_val'>Score</option>
+<option value='chem'>Chemical Compound/Drug</option>
+<option value='term'>MeSH Term</option>
+<option value='term_refs'>Articles</option>
+</select><br>
+<select id=limit >
+<option value='50000'>Show Top 50000 Results</option>
+<option value='500' selected="selected">Show Top 500 Results</option>
+<option value='100'>Show Top 100 Results</option>
+<option value='50'>Show Top 50 Results</option>
+<option value='10'>Show Top 10 Results</option>
+</select>
+<select id=order >
+<option value='ASC'>Up</option>
+<option value='DESC'>Down</option>
+</select>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+<ul>
+<li>Type in a chemical compound/drug to see all associated MeSH terms
+<li>Type in a MeSH term to see all associated chemical compounds/drugs
+</ul>
+</div>
+
+<div class="result-box" id='ajaxDiv'>Your result will display here</div>
+</body>
+</html>

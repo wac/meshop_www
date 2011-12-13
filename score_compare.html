@@ -1,0 +1,63 @@
+<html>
+<head>
+  <title>Examine Gene-Disease Profile MeSH Term Overlap</title>
+  <link rel="stylesheet" type="text/css" href="browse-form.css">
+  <script language="javascript" src="simpleAjax.js"> </script>
+  <script language="javascript" src="suggest.js"> </script>
+<script language="javascript" type="text/javascript">
+<!-- 
+//Browser Support Code
+
+function formSubmit(){
+
+var gene = document.getElementById('gene').value;
+var term = document.getElementById('term').value;
+var limit = document.getElementById('limit').value;
+
+var queryString = "?term=" + term + "&gene=" + gene + "&limit=" + limit;
+
+var sortid=document.getElementById("sortid").value; 
+
+var order=document.getElementById('order').value;
+queryString = "score_compare.php" + queryString + "&sortid=" + sortid + "&order=" + order;
+
+ajaxSubmit( queryString, 'resultDiv',
+"Fetching results from database<br>Loading from "+queryString);
+
+}
+
+//-->
+</script>
+</head>
+
+<body>
+
+<blockquote class="back-button"><a href="index.html">Back</a></blockquote>
+
+<h1 class="boxed-title">Examine Gene-Disease Profile MeSH Term Overlap</h1>
+<p class="top">
+<div style="clear:both"></div>
+
+<form class="float-left" name='browseForm' onsubmit='return false' >
+Disease MeSH Term: <input type='text' id='term' onkeyup="suggestTerm('term','suggestDiv','C')" onclick="suggestTerm('term','suggestDiv','C')" style="width:25em" /> <br />
+Gene: <input type='text' id='gene' onkeyup="suggestGene()" onclick="suggestGene()" /> <br />
+<select id='sortid'>
+<option value='Term Fractions'>Term Fraction</option>
+</select><br />
+<select id=limit>
+<option value='100'>Show Top 100 Results</option>
+<option value='50'>Show Top 50 Results</option>
+<option value='10'>Show Top 10 Results</option>
+</select>
+<select id=order>
+<option value='ASC' selected="selected">Ascending</option>
+<option value='DESC'>Descending</option>
+</select>
+<button onClick="formSubmit()">Submit</button>
+</form>
+<div class="float-left" id='suggestDiv'>
+</div>
+
+<div class="result-box" id='resultDiv'></div>
+</body>
+</html>
